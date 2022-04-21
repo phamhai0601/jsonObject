@@ -1,0 +1,22 @@
+{
+    "name": "hai/json-object",
+    "autoload": {
+        "psr-4": {
+            "Hai\\JsonObject\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "phamhai0601"
+        }
+    ],
+	"require": {
+        "php": ">=7.0",
+		"ext-json" : "*"
+	},
+	"autoload": {
+        "psr-4": {
+			"JsonObject\\": "lib/"
+        }
+    }
+}

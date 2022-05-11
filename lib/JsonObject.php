@@ -161,9 +161,6 @@ class JsonObject {
 			$this->update(json_encode($arrJson));
 			return true;
 		} catch (\Exception $exception) {
-			echo '<pre>';
-			print_r($exception);
-			die;
 		}
 		return false;
 	}

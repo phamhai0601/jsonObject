@@ -140,8 +140,6 @@ class JsonObject {
 		}
 		try {
 			$arrJson  = $this->get();
-			$flag     = true;
-			$index    = 0;
 			$response = &$arrJson;
 			if (empty($keys)) {
 				$arrJson[$key] = $value;
@@ -159,9 +157,6 @@ class JsonObject {
 			$this->update(json_encode($arrJson));
 			return true;
 		} catch (\Exception $exception) {
-			echo '<pre>';
-			print_r($exception);
-			die;
 		}
 		return false;
 	}

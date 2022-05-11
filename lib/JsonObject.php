@@ -135,7 +135,7 @@ class JsonObject {
 	 * @return bool
 	 */
 	public function insert($key = null, $value = null, array $keys = []): bool {
-		if (is_null($key) || is_null($value)) {
+		if (is_null($value)) {
 			return false;
 		}
 		try {
@@ -153,10 +153,17 @@ class JsonObject {
 					$response = [];
 				}
 			}
-			$response[$key] = $value;
+			if($key == null){
+				$response[] = $value;
+			}else{
+				$response[$key] = $value;
+			}
 			$this->update(json_encode($arrJson));
 			return true;
 		} catch (\Exception $exception) {
+			echo '<pre>';
+			print_r($exception);
+			die;
 		}
 		return false;
 	}

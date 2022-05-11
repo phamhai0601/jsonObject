@@ -70,7 +70,7 @@ class JsonObject {
 	 *
 	 * @return bool
 	 */
-	public function set($value, array $keys): bool {
+	public function set(array $keys, $value): bool {
 		try {
 			$arrJson  = $this->get();
 			$flag     = true;
@@ -108,11 +108,6 @@ class JsonObject {
 			$flag     = true;
 			$index    = 0;
 			$response = &$arrJson;
-			if (count($keys) == 1) {
-				unset($response[$keys[0]]);
-				$this->update(json_encode($response));
-				return true;
-			}
 			while ($flag == true) {
 				$response = &$response[$keys[$index]];
 				$index ++;

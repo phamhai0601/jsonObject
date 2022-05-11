@@ -70,7 +70,7 @@ class JsonObject {
 	 *
 	 * @return bool
 	 */
-	public function set(array $keys, $value): bool {
+	public function set($value, array $keys): bool {
 		try {
 			$arrJson  = $this->get();
 			$flag     = true;
@@ -108,6 +108,11 @@ class JsonObject {
 			$flag     = true;
 			$index    = 0;
 			$response = &$arrJson;
+			if (count($keys) == 1) {
+				unset($response[$keys[0]]);
+				$this->update(json_encode($response));
+				return true;
+			}
 			while ($flag == true) {
 				$response = &$response[$keys[$index]];
 				$index ++;
@@ -120,6 +125,45 @@ class JsonObject {
 		} catch (\Exception $exception) {
 			return false;
 		}
+	}
+
+	/**
+	 * @param null  $key
+	 * @param null  $value
+	 * @param array $keys
+	 *
+	 * @return bool
+	 */
+	public function insert($key = null, $value = null, array $keys = []): bool {
+		if (is_null($key) || is_null($value)) {
+			return false;
+		}
+		try {
+			$arrJson  = $this->get();
+			$flag     = true;
+			$index    = 0;
+			$response = &$arrJson;
+			if (empty($keys)) {
+				$arrJson[$key] = $value;
+				$this->update(json_encode($arrJson));
+				return true;
+			}
+
+			foreach ($keys as $item){
+				$response = &$response[$item];
+				if(is_array($response) === false){
+					$response = [];
+				}
+			}
+			$response[$key] = $value;
+			$this->update(json_encode($arrJson));
+			return true;
+		} catch (\Exception $exception) {
+			echo '<pre>';
+			print_r($exception);
+			die;
+		}
+		return false;
 	}
 
 	/**

@@ -58,9 +58,9 @@ class JsonObject {
 				}
 				return $response;
 			}
-			return null;
+			return [];
 		} catch (\Exception $exception) {
-			return null;
+			return [];
 		}
 	}
 
@@ -135,31 +135,28 @@ class JsonObject {
 	 * @return bool
 	 */
 	public function insert($key = null, $value = null, array $keys = []): bool {
-		if (is_null($value)) {
+		if (is_null($key) || is_null($value)) {
 			return false;
 		}
 		try {
 			$arrJson  = $this->get();
+			$flag     = true;
+			$index    = 0;
 			$response = &$arrJson;
 			if (empty($keys)) {
 				$arrJson[$key] = $value;
 				$this->update(json_encode($arrJson));
 				return true;
 			}
-
-			foreach ($keys as $item){
-				$response = &$response[$item];
-				if(is_array($response) === false){
-					$response = [];
+			while ($flag == true) {
+				$response = &$response[$keys[$index]];
+				$index ++;
+				if (!isset($keys[$index + 1])) {
+					unset($response[$keys[$index]]);
+					$this->update(json_encode($arrJson));
+					return true;
 				}
 			}
-			if($key == null){
-				$response[] = $value;
-			}else{
-				$response[$key] = $value;
-			}
-			$this->update(json_encode($arrJson));
-			return true;
 		} catch (\Exception $exception) {
 		}
 		return false;

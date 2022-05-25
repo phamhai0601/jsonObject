@@ -22,7 +22,6 @@ class JsonObject {
 	 */
 	public function __construct(string $path) {
 		$this->path = $path;
-		$this->json = $this->json = file_get_contents($this->path);
 	}
 
 	/**
@@ -35,6 +34,10 @@ class JsonObject {
 		return json_decode($json);
 	}
 
+	public function json(){
+		return file_get_contents($this->path);
+	}
+
 	/**
 	 * @param array|null $keys
 	 *
@@ -42,7 +45,7 @@ class JsonObject {
 	 */
 	public function get(array $keys = null) {
 		try {
-			$arrJson = json_decode($this->json, true);
+			$arrJson = json_decode($this->json(), true);
 			if ($keys == null) {
 				return $arrJson;
 			} else {
@@ -166,7 +169,6 @@ class JsonObject {
 	 * @param string $json
 	 */
 	public function update(string $json) {
-		$this->json = $json;
 		$this->create($json);
 	}
 }

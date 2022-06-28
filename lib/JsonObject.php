@@ -22,6 +22,9 @@ class JsonObject {
 	 */
 	public function __construct(string $path) {
 		$this->path = $path;
+		if(file_exists($this->path) == false){
+			$this->create("");
+		}
 	}
 
 	/**
